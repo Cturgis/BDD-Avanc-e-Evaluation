@@ -4,6 +4,7 @@ import db from '../config/db';
 
 let server: any;
 let employeeId: number;
+let employee2Id: number;
 const port = 3000;
 
 describe('Employee API Routes', () => {
@@ -43,6 +44,7 @@ describe('Employee API Routes', () => {
     const response = await request(app)
       .post('/api/employees/add')
       .send(newEmployee);
+    employee2Id = response.body.id;
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('id');
@@ -95,7 +97,7 @@ describe('Employee API Routes', () => {
     expect(response.status).toBe(200);
     expect(response.body.first_name).toBe(updatedData.first_name);
     expect(response.body.last_name).toBe(updatedData.last_name);
-    expect(response.body.salary).toBe(updatedData.salary);
+    expect(parseFloat(response.body.salary)).toBe(updatedData.salary);
   });
 
   it('should return 404 if employee not found', async () => {
@@ -125,6 +127,6 @@ describe('Employee API Routes', () => {
 
   afterAll(async () => {
     await db.query(`DELETE FROM employees WHERE id = $1`, [employeeId]);
-    await db.query(`DELETE FROM employees WHERE id = 1002`);
+    await db.query(`DELETE FROM employees WHERE id = $1`, [employee2Id]);
   });
 });
