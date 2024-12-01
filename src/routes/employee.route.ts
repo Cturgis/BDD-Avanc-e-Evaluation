@@ -33,7 +33,7 @@ router.post(
 );
 
 router.put(
-  '/modify/:id',
+  '/update/:id',
   async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params;
     const { first_name, last_name, email, salary, service_id }: Employee = req.body;
