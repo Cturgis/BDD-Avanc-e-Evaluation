@@ -26,6 +26,8 @@
    ```shell
       npm install --save-dev nodemon @types/nodemon #live reloading
       npm install pg @types/pg #client postgres
+      npm install dotenv
+      npm install jest supertest @types/jest ts-jest --save-dev
    ```
    
 5. start app :
