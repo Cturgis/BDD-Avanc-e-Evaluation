@@ -23,4 +23,5 @@
 4. Liste des procédures :
    - get_top_5_services_by_payroll()
    - get_employee_count_ranking()
+   - list_managers_and_services()
 
