@@ -121,6 +121,10 @@ router.get(
   async (req: Request<EmployeeParams>, res: Response): Promise<any> => {
   const { id } = req.params;
 
+    if (isNaN(Number(id))) {
+      return res.status(400).json({ error: 'Invalid ID format' });
+    }
+
   try {
     const result = await db.query('SELECT * FROM employees WHERE id = $1', [id]);
 

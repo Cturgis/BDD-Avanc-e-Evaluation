@@ -55,7 +55,9 @@ router.post(
   }
 });
 
-router.put('/modify/:id', async (req: Request<Partial<Service>>, res: Response): Promise<any> => {
+router.put(
+  '/update/:id',
+  async (req: Request<Partial<Service>>, res: Response): Promise<any> => {
   const { id } = req.params;
   const { name, office_number } = req.body;
 
@@ -81,7 +83,9 @@ router.put('/modify/:id', async (req: Request<Partial<Service>>, res: Response):
   }
 });
 
-router.delete('/delete/:id', async (req: Request<{id: number}>, res: Response): Promise<any> => {
+router.delete(
+  '/delete/:id',
+  async (req: Request<{id: number}>, res: Response): Promise<any> => {
   const { id } = req.params;
 
   try {

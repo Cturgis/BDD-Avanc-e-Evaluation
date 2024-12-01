@@ -77,8 +77,8 @@ describe('Employee API Routes', () => {
   it('should return 500 if the ID is invalid', async () => {
     const response = await request(app).get('/api/employees/get/invalid-id');
 
-    expect(response.status).toBe(500);
-    expect(response.body).toHaveProperty('error', 'Internal server error');
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error', 'Invalid ID format');
   });
 
   it('should update an employee', async () => {
@@ -125,5 +125,6 @@ describe('Employee API Routes', () => {
 
   afterAll(async () => {
     await db.query(`DELETE FROM employees WHERE id = $1`, [employeeId]);
+    await db.query(`DELETE FROM employees WHERE id = 1002`);
   });
 });

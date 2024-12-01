@@ -74,7 +74,7 @@ describe('Service Routes', () => {
 
   it('should return 404 if service not found', async () => {
     const response = await request(app)
-      .delete('/api/services/9999');
+      .delete('/api/services/delete/9999');
 
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty('error', 'Service not found');
