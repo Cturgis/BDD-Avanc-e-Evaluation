@@ -1,9 +1,11 @@
 export interface Employee {
-  id: number;
+  id?: number;
   first_name: string;
   last_name: string;
   email: string;
-  service_name: string;
+  salary: number;
+  service_name?: string;
+  service_id: string;
 }
 
 export interface Manager extends Employee {
