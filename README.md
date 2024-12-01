@@ -22,12 +22,14 @@
    node dist/app.js
    ```
 
-4. Dependences pour le live reloading 
+4. Dependences
    ```shell
-      npm install --save-dev nodemon @types/nodemon 
+      npm install --save-dev nodemon @types/nodemon #live reloading
+      npm install pg @types/pg #client postgres
    ```
    
 5. start app :
    ```shell
    npm start
    ```
+   
