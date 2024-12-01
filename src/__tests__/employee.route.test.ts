@@ -2,16 +2,13 @@ import request from 'supertest';
 import app from '../app';
 import db from '../config/db';
 
-let server: any;
 let employeeId: number;
 let employee2Id: number;
-const port = 3000;
+let server: any;
 
 describe('Employee API Routes', () => {
 
   beforeAll(async () => {
-    server = app.listen(port);
-
     const newEmployee = {
       first_name: 'Coco',
       last_name: 'Turgis',
@@ -22,14 +19,10 @@ describe('Employee API Routes', () => {
 
     const result = await db.query(
       'INSERT INTO employees (first_name, last_name, email, salary, service_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [newEmployee.first_name, newEmployee.last_name, newEmployee.email, newEmployee.salary, newEmployee.service_id]
+      [newEmployee.first_name, newEmployee.last_name, newEmployee.email, newEmployee.salary, newEmployee.service_id],
     );
 
     employeeId = result.rows[0].id;
-  });
-
-  afterAll(() => {
-    server.close();
   });
 
   it('should add an employee', async () => {
@@ -126,7 +119,11 @@ describe('Employee API Routes', () => {
   });
 
   afterAll(async () => {
-    await db.query(`DELETE FROM employees WHERE id = $1`, [employeeId]);
-    await db.query(`DELETE FROM employees WHERE id = $1`, [employee2Id]);
+    await db.query(`DELETE
+                    FROM employees
+                    WHERE id = $1`, [employeeId]);
+    await db.query(`DELETE
+                    FROM employees
+                    WHERE id = $1`, [employee2Id]);
   });
 });

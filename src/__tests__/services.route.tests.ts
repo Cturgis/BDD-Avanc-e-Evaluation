@@ -1,9 +1,6 @@
 import request from 'supertest';
 import app from '../app';
 
-let server: any;
-const port = 3000;
-
 describe('Service Routes', () => {
   let serviceId: number;
 

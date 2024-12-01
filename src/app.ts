@@ -1,8 +1,8 @@
-import express from 'express';
+import express, { Express } from 'express';
 import employeeRoutes from './routes/employee.route';
 import serviceRoutes from './routes/service.route';
 
-const app = express();
+const app: Express = express();
 const port = 3000;
 
 app.use(express.json());
