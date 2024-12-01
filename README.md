@@ -10,6 +10,13 @@
    ```
 2. Execution d'un script
    ```postgresql
-   \i Documents/Livecampus/BDD-Avance-Evaluation/documentation/createDB.sql
+   \i scriptPath
    ```
    
+3. Liste des scripts :
+   - documentation/createDB.sql => Supprime et créer la base de donnée du projet
+   - documentation/randomPopulate => Remplis la BDD avec des valeurs aléatoires
+   - requests/countEmployee.sql
+   - requests/avgSalary.sql
+   - avgSalariesByServices.sql
+
