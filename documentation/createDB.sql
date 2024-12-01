@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS company;
 CREATE DATABASE company;
 \c company;
 
