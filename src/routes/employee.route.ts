@@ -4,10 +4,6 @@ import { Employee } from '../models/Employee';
 
 const router = Router();
 
-interface EmployeeParams {
-  id: string;
-}
-
 router.post(
   '/add',
   async (req: Request, res: Response): Promise<any> => {
@@ -71,10 +67,9 @@ router.put(
       setQuery = fieldsToUpdate.map((field, index) => `${field} = $${index + 1}`).join(', ');
 
       const query = `
-        UPDATE employees
-        SET ${setQuery}
-        WHERE id = $${valuesToUpdate.length + 1}
-        RETURNING *;
+          UPDATE employees
+          SET ${setQuery}
+          WHERE id = $${valuesToUpdate.length + 1} RETURNING *;
       `;
       const result = await db.query(query, [...valuesToUpdate, id]);
 
@@ -88,7 +83,7 @@ router.put(
       console.error(err.message);
       res.status(500).json({ error: 'Internal server error' });
     }
-  }
+  },
 );
 
 router.delete(
@@ -98,9 +93,9 @@ router.delete(
 
     try {
       const query = `
-        DELETE FROM employees
-        WHERE id = $1
-        RETURNING *;
+          DELETE
+          FROM employees
+          WHERE id = $1 RETURNING *;
       `;
       const result = await db.query(query, [id]);
 
@@ -113,31 +108,31 @@ router.delete(
       console.error(err.message);
       res.status(500).json({ error: 'Internal server error' });
     }
-  }
+  },
 );
 
 router.get(
   '/get/:id',
-  async (req: Request<EmployeeParams>, res: Response): Promise<any> => {
-  const { id } = req.params;
+  async (req: Request<{ id: number }>, res: Response): Promise<any> => {
+    const { id } = req.params;
 
     if (isNaN(Number(id))) {
       return res.status(400).json({ error: 'Invalid ID format' });
     }
 
-  try {
-    const result = await db.query('SELECT * FROM employees WHERE id = $1', [id]);
+    try {
+      const result = await db.query('SELECT * FROM employees WHERE id = $1', [id]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Employee not found' });
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Employee not found' });
+      }
+
+      res.json(result.rows[0]);
+    } catch (err: any) {
+      console.error(err.message);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
     }
-
-    res.json(result.rows[0]);
-  } catch (err: any) {
-    console.error(err.message);
-    res.status(500).json({ error: 'Internal server error' });
-    return;
-  }
-});
+  });
 
 export default router;
