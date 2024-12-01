@@ -10,12 +10,11 @@ interface EmployeeParams {
 
 router.post(
   '/add',
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request, res: Response): Promise<any> => {
     const { first_name, last_name, email, salary, service_id }: Employee = req.body;
 
     if (!first_name || !last_name || !email || !salary || !service_id) {
-      res.status(400).json({ error: 'Missing required fields' });
-      return;
+      return res.status(400).json({ error: 'Missing required fields' });
     }
 
     try {
@@ -34,14 +33,13 @@ router.post(
 );
 
 router.put(
-  '/:id',
-  async (req: Request, res: Response): Promise<void> => {
+  '/modify/:id',
+  async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params;
     const { first_name, last_name, email, salary, service_id }: Employee = req.body;
 
     if (!first_name && !last_name && !email && !salary && !service_id) {
-      res.status(400).json({ error: 'No data provided to update' });
-      return;
+      return res.status(400).json({ error: 'No data provided to update' });
     }
 
     try {
@@ -94,8 +92,8 @@ router.put(
 );
 
 router.delete(
-  '/:id',
-  async (req: Request, res: Response): Promise<void> => {
+  '/delete/:id',
+  async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params;
 
     try {
@@ -107,8 +105,7 @@ router.delete(
       const result = await db.query(query, [id]);
 
       if (result.rows.length === 0) {
-        res.status(404).json({ error: 'Employee not found' });
-        return;
+        return res.status(404).json({ error: 'Employee not found' });
       }
 
       res.status(200).json({ message: 'Employee deleted successfully' });
@@ -119,15 +116,16 @@ router.delete(
   }
 );
 
-router.get('/:id', async (req: Request<EmployeeParams>, res: Response): Promise<void> => {
+router.get(
+  '/get/:id',
+  async (req: Request<EmployeeParams>, res: Response): Promise<any> => {
   const { id } = req.params;
 
   try {
     const result = await db.query('SELECT * FROM employees WHERE id = $1', [id]);
 
     if (result.rows.length === 0) {
-      res.status(404).json({ error: 'Employee not found' });
-      return;
+      return res.status(404).json({ error: 'Employee not found' });
     }
 
     res.json(result.rows[0]);

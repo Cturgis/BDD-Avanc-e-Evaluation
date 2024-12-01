@@ -35,3 +35,15 @@
    npm start
    ```
    
+6. Route :
+  - /api/services
+    - /add
+    - /delete/:id
+    - /update/:id
+    - /get-manager/:id
+  - /api/employees
+    - /get/:id
+    - /add
+    - /delete/:id
+    - /update/:id
+   
