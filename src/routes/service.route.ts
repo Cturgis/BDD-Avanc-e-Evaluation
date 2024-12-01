@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { db } from '../config/db';
 import { ManagerParams } from '../models/Employee';
+import db from '../config/db';
 
 const router = Router();
 
